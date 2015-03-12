@@ -87,7 +87,7 @@ Function GetPolicies
 
 	foreach ($pol in $resp.templates)
 	{
-		$pols.Add($pol.title, $pol.uuid)
+		$pols.Add($pol.uuid, $pol.title)
 	}
 
 	return $pols
