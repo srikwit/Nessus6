@@ -45,8 +45,13 @@ def connect(method, resource, data=None):
     # When downloading a scan we need the raw contents not the JSON data. 
     if 'download' in resource:
         return r.content
-    else:
+
+    # All other responses should be JSON data. Return raw content if they are
+    # not.
+    try:
         return r.json()
+    except ValueError:
+        return r.content
 
 
 def login(usr, pwd):

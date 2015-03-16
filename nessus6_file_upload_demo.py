@@ -37,13 +37,22 @@ def connect(method, resource, data=None):
     else:
         r = requests.get(build_url(resource), params=data, headers=headers, verify=verify)
 
-    resp = r.json()
-
+    # Exit if there is an error.
     if r.status_code != 200:
-        print(resp['error'])
-        sys.exit
+        e = r.json()
+        print e['error']
+        sys.exit()
 
-    return resp
+    # When downloading a scan we need the raw contents not the JSON data. 
+    if 'download' in resource:
+        return r.content
+
+    # All other responses should be JSON data. Return raw content if they are
+    # not.
+    try:
+        return r.json()
+    except ValueError:
+        return r.content
 
 
 def upload(upload_file):
