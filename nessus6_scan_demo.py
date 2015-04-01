@@ -14,7 +14,7 @@ def build_url(resource):
     return '{0}{1}'.format(url, resource)
 
 
-def connect(method, resource, data=None):
+def connect(method, resource, data=None, params=None):
     """
     Send a request
 
@@ -34,7 +34,7 @@ def connect(method, resource, data=None):
     elif method == 'DELETE':
         r = requests.delete(build_url(resource), data=data, headers=headers, verify=verify)
     else:
-        r = requests.get(build_url(resource), params=data, headers=headers, verify=verify)
+        r = requests.get(build_url(resource), params=params, headers=headers, verify=verify)
 
     # Exit if there is an error.
     if r.status_code != 200:
