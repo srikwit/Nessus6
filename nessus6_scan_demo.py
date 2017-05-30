@@ -2,12 +2,21 @@ import requests
 import json
 import time
 import sys
+import urllib3
+import datetime
+
+
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+urllib3.disable_warnings()
 
 url = 'https://<nessus_ip_or_hostname>:8834'
 verify = False
 token = ''
 username = 'admin'
 password = 'password'
+
+
 
 
 def build_url(resource):
@@ -22,8 +31,7 @@ def connect(method, resource, data=None, params=None):
     is available add it to the request. Specify the content type as JSON and
     convert the data to JSON format.
     """
-    headers = {'X-Cookie': 'token={0}'.format(token),
-               'content-type': 'application/json'}
+    headers = {'X-Cookie': 'token={0}'.format(token),'content-type': 'application/json'}
 
     data = json.dumps(data)
 
